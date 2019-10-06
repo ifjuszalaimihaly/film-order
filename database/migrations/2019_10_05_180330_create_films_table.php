@@ -17,10 +17,10 @@ class CreateFilmsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_hungarian_ci';
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('original_title')->nullable();
+            $table->string('original_title')->unique();
+            $table->string('translated_title')->unique()->nullable();
             $table->unsignedSmallInteger('release_year')->nullable();
-            $table->string('imdb',10)->nullable();
+            $table->string('imdb',10);
             $table->unsignedTinyInteger('rating')->nullable();
             $table->timestamps();
         });
