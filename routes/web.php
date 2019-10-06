@@ -19,5 +19,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/approval', 'HomeController@approval')->name('approval');
     Route::middleware(['approved'])->group(function (){
         Route::get('/home', 'HomeController@index')->name('home');
+        Route::get('/omdbapi', 'FileAPIController@omdbapiRequest')->name('omdbapi');
     });
 });
