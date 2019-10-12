@@ -20,8 +20,8 @@ class CreateFilmsTable extends Migration
             $table->string('original_title')->unique();
             $table->string('translated_title')->unique()->nullable();
             $table->unsignedSmallInteger('release_year')->nullable();
-            $table->string('imdb',10);
-            $table->unsignedTinyInteger('rating')->nullable();
+            $table->string('imdb',10)->unique();
+            $table->decimal('rating')->nullable();
             $table->timestamps();
         });
     }

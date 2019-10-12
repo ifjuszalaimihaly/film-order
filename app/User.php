@@ -36,4 +36,9 @@ class User extends Authenticatable
     protected $casts = [
         'approved_at' => 'datetime',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
