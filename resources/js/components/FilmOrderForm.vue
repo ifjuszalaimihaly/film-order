@@ -99,7 +99,7 @@
                 let url = window.location.origin + "/omdbapi";
                 console.log(mode);
                 if (mode === "title") {
-                   url += "?title=" + this.originalTitle;
+                    url += "?title=" + this.originalTitle;
                 }
                 if(mode === "imdb_id"){
                     url += "?imdb_id=" + this.imdb_id;
