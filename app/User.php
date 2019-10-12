@@ -41,4 +41,26 @@ class User extends Authenticatable
     {
         return $this->hasMany(Order::class);
     }
+
+    public function films()
+    {
+        return $this->hasManyThrough(
+            Film::class,
+            Order::class,
+            "user_id",
+            "id",
+            "id",
+            "film_id"
+        );
+    }
+
+    public function ownedFilms()
+    {
+        return $this->films()->where("owner","=",1);
+    }
+
+    public function followedFilms()
+    {
+        return $this->films()->where("owner","=",0);
+    }
 }

@@ -17,12 +17,16 @@ class CreateFilmsTable extends Migration
             $table->charset = 'utf8';
             $table->collation = 'utf8_hungarian_ci';
             $table->bigIncrements('id');
+            $table->unsignedTinyInteger("status_id");
             $table->string('original_title')->unique();
             $table->string('translated_title')->unique()->nullable();
             $table->unsignedSmallInteger('release_year')->nullable();
             $table->string('imdb',10)->unique();
             $table->decimal('rating')->nullable();
             $table->timestamps();
+
+            $table->foreign('status_id')
+                ->references('id')->on('statuses');
         });
     }
 

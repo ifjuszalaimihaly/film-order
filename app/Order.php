@@ -15,4 +15,16 @@ class Order extends Model
     {
         return $this->belongsTo(Film::class);
     }
+
+    public function status()
+    {
+        return $this->hasOneThrough(
+            Status::class,
+            Film::class,
+            "first_key",
+            "second_key",
+            "local_key",
+            "second_local_key"
+        );
+    }
 }

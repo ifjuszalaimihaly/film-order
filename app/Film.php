@@ -10,4 +10,9 @@ class Film extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class);
+    }
 }

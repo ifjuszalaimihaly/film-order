@@ -20,9 +20,6 @@ class CreateOrdersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('film_id');
             $table->boolean('owner')->default(false);
-            $table->enum('status',
-                ['unchecked','accepted','refused','downloading','downloaded','burned','unattainable']
-            );
             $table->timestamps();
 
             $table->foreign('user_id')
