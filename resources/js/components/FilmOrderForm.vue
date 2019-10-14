@@ -7,6 +7,13 @@
 
                     <div class="card-body">
                         <form>
+                            <div class="alert alert-danger"  v-bind:class="{'d-none': !errors.length}">
+                                <ul>
+                                   <li v-for="error in errors">
+                                       {{error}}
+                                   </li>
+                                </ul>
+                            </div>
                             <div class="form-group">
                                 <label for="imdb">IMDb ID</label>
                                 <input type="text"
@@ -35,8 +42,8 @@
                                     Enter the original title of the Film
                                 </small>
                             </div>
-                            <div class="card" v-bind:class="{'d-none': !showCard}">
-                                <img v-bind:src="imgScr" class="card-img-top" alt="...">
+                            <div class="card" v-bind:class="{'d-none': !valid}">
+                                <img v-bind:src="imgScr" class="card-img-top">
                                 <div class="card-body">
                                     <h5 class="card-title">
                                         {{translatedTitle}}
@@ -57,7 +64,13 @@
                             <button type="button" id="dataCheck" class="btn btn-success" @click="dataCheck">
                                 Check Data
                             </button>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    v-bind:class="{'disabled': !valid}"
+                                    :disabled="!valid"
+                                    @click="send">
+                                Submit
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -82,7 +95,8 @@
                 imgScr: null,
                 year: null,
                 rating: null,
-                showCard: false
+                valid: false,
+                errors: []
             }
         },
         methods: {
@@ -97,7 +111,6 @@
             },
             omdbRequest(mode) {
                 let url = window.location.origin + "/omdbapi";
-                console.log(mode);
                 if (mode === "title") {
                     url += "?title=" + this.originalTitle;
                 }
@@ -116,10 +129,10 @@
                         this.imgScr = response.data.img;
                         this.year = response.data.year;
                         this.rating = parseFloat(response.data.rating);
-                        this.showCard = true;
+                        this.valid = true;
                     })
                     .catch(error => {
-                        console.log(error);
+
                     })
             },
             theMovieDbRequest(imdbId) {
@@ -137,9 +150,28 @@
             },
             imdbFocus() {
                 this.originalTitle = null;
+                this.valid = false;
             },
             originalTitleFocus() {
                 this.imdb_id = null
+                this.valid = false;
+            },
+            send() {
+                let data = {
+                    imdb_id: this.imdb_id,
+                    original_title: this.originalTitle,
+                    translated_title: this.translatedTitle,
+                    release_year: this.year,
+                    rating: this.rating
+                };
+                let url = window.location.origin+"/film-orders";
+                axios.post(url,data).then(response => {
+                    alert("ok")
+                    alert(response.status);
+                }).catch((error) => {
+                    alert("error");
+                    console.log("error",error)
+                });
             }
 
         },

@@ -1910,6 +1910,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -1925,7 +1938,8 @@ __webpack_require__.r(__webpack_exports__);
       imgScr: null,
       year: null,
       rating: null,
-      showCard: false
+      valid: false,
+      errors: []
     };
   },
   methods: {
@@ -1943,7 +1957,6 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var url = window.location.origin + "/omdbapi";
-      console.log(mode);
 
       if (mode === "title") {
         url += "?title=" + this.originalTitle;
@@ -1967,10 +1980,8 @@ __webpack_require__.r(__webpack_exports__);
         _this.imgScr = response.data.img;
         _this.year = response.data.year;
         _this.rating = parseFloat(response.data.rating);
-        _this.showCard = true;
-      })["catch"](function (error) {
-        console.log(error);
-      });
+        _this.valid = true;
+      })["catch"](function (error) {});
     },
     theMovieDbRequest: function theMovieDbRequest(imdbId) {
       var _this2 = this;
@@ -1988,9 +1999,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     imdbFocus: function imdbFocus() {
       this.originalTitle = null;
+      this.valid = false;
     },
     originalTitleFocus: function originalTitleFocus() {
       this.imdb_id = null;
+      this.valid = false;
+    },
+    send: function send() {
+      var data = {
+        imdb_id: this.imdb_id,
+        original_title: this.originalTitle,
+        translated_title: this.translatedTitle,
+        release_year: this.year,
+        rating: this.rating
+      };
+      var url = window.location.origin + "/film-orders";
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(url, data).then(function (response) {
+        alert("ok");
+        alert(response.status);
+      })["catch"](function (error) {
+        alert("error");
+        console.log("error", error);
+      });
     }
   },
   mounted: function mounted() {
@@ -37302,6 +37332,29 @@ var render = function() {
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("form", [
+              _c(
+                "div",
+                {
+                  staticClass: "alert alert-danger",
+                  class: { "d-none": !_vm.errors.length }
+                },
+                [
+                  _c(
+                    "ul",
+                    _vm._l(_vm.errors, function(error) {
+                      return _c("li", [
+                        _vm._v(
+                          "\n                                   " +
+                            _vm._s(error) +
+                            "\n                               "
+                        )
+                      ])
+                    }),
+                    0
+                  )
+                ]
+              ),
+              _vm._v(" "),
               _c("div", { staticClass: "form-group" }, [
                 _c("label", { attrs: { for: "imdb" } }, [_vm._v("IMDb ID")]),
                 _vm._v(" "),
@@ -37398,11 +37451,11 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "div",
-                { staticClass: "card", class: { "d-none": !_vm.showCard } },
+                { staticClass: "card", class: { "d-none": !_vm.valid } },
                 [
                   _c("img", {
                     staticClass: "card-img-top",
-                    attrs: { src: _vm.imgScr, alt: "..." }
+                    attrs: { src: _vm.imgScr }
                   }),
                   _vm._v(" "),
                   _c("div", { staticClass: "card-body" }, [
@@ -37458,8 +37511,17 @@ var render = function() {
               _vm._v(" "),
               _c(
                 "button",
-                { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-                [_vm._v("Submit")]
+                {
+                  staticClass: "btn btn-primary",
+                  class: { disabled: !_vm.valid },
+                  attrs: { type: "button", disabled: !_vm.valid },
+                  on: { click: _vm.send }
+                },
+                [
+                  _vm._v(
+                    "\n                            Submit\n                        "
+                  )
+                ]
               )
             ])
           ])

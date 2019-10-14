@@ -21,5 +21,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/omdbapi', 'FilmAPIController@omdbAPIRequest')->name('omdbapi');
         Route::get('/themoviedbapi', 'FilmAPIController@theMovieDbAPIRequest')->name('themoviedbapi');
+        Route::post('/film-orders','FilmOrderController@store')->name("film-orders.store");
     });
 });
