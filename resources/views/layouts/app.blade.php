@@ -33,7 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        <li>
+                            <a class="nav" href="{{ route('orders.index') }}">
+                                My films
+                            </a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
