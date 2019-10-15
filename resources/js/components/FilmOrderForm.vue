@@ -7,12 +7,17 @@
 
                     <div class="card-body">
                         <form>
-                            <div class="alert alert-danger"  v-bind:class="{'d-none': !errors.length}">
+                            <div class="alert alert-danger alert-dismissible fade show"
+                                 v-bind:class="{'d-none': !errors.length}"
+                                 role="alert">
                                 <ul>
                                    <li v-for="error in errors">
                                        {{error}}
                                    </li>
                                 </ul>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
                             <div class="form-group">
                                 <label for="imdb">IMDb ID</label>
