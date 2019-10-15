@@ -80,7 +80,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
     import StarRating from 'vue-star-rating';
     export default {
         components: {
@@ -101,6 +100,7 @@
         },
         methods: {
             dataCheck() {
+                this.errors = [];
                 if (this.originalTitle !== null) {
                     this.omdbRequest("title")
                 }
@@ -151,14 +151,16 @@
             imdbFocus() {
                 this.originalTitle = null;
                 this.valid = false;
+                this.errors = [];
             },
             originalTitleFocus() {
                 this.imdb_id = null
                 this.valid = false;
+                this.errors = [];
             },
             send() {
                 let data = {
-                    imdb_id: this.imdb_id,
+                    imdb: this.imdb_id,
                     original_title: this.originalTitle,
                     translated_title: this.translatedTitle,
                     release_year: this.year,
@@ -169,8 +171,9 @@
                     alert("ok")
                     alert(response.status);
                 }).catch((error) => {
-                    alert("error");
-                    console.log("error",error)
+                    if(error.response.data.error) {
+                        this.errors = error.response.data.error;
+                    }
                 });
             }
 

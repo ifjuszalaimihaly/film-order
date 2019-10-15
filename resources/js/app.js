@@ -7,8 +7,6 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
-const VueResource = require('vue-resource');
-window.Vue.use(VueResource);
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue

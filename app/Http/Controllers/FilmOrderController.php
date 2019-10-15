@@ -30,12 +30,13 @@ class FilmOrderController extends Controller
             ]
         );
         if ($validator->fails()){
+            error_log($validator->errors());
             return response()->json(['error'=>$validator->errors()->all()],400);
         }
         $film = new Film();
         $film->original_title = $request->original_title;
         $film->translated_title = $request->translated_title;
-        $film->imdb = $request->imdb_id;
+        $film->imdb = $request->imdb;
         $film->release_year = $request->release_year;
         $film->rating = $request->rating;
         $film->status_id = 1;
