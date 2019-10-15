@@ -35,7 +35,7 @@ class FilmAPIController extends Controller
             $client = new Client();
             $result = $client->get($uri);
             $result = json_decode($result->getBody()->getContents(), true);
-            if (array_keys($result,"Error")) {
+            if (array_key_exists("Error",$result)) {
                 return response()->json(["error" => "Film not found"],404);
             }
             return response()->json([

@@ -132,7 +132,10 @@
                         this.valid = true;
                     })
                     .catch(error => {
-
+                        let errorMessage = error.response.data.error;
+                        if(errorMessage && !this.errors.includes(errorMessage)) {
+                            this.errors.push(error.response.data.error);
+                        }
                     })
             },
             theMovieDbRequest(imdbId) {
@@ -144,8 +147,11 @@
                         this.translatedTitle = resp.data.title;
                         this.overview = resp.data.overview;
                     })
-                    .catch(err => {
-                        console.log("err");
+                    .catch(error => {
+                        let errorMessage = error.response.data.error;
+                        if(errorMessage && !this.errors.includes(errorMessage)) {
+                            this.errors.push(error.response.data.error);
+                        }
                     })
             },
             imdbFocus() {

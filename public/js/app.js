@@ -1980,7 +1980,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.year = response.data.year;
         _this.rating = parseFloat(response.data.rating);
         _this.valid = true;
-      })["catch"](function (error) {});
+      })["catch"](function (error) {
+        var errorMessage = error.response.data.error;
+
+        if (errorMessage && !_this.errors.includes(errorMessage)) {
+          _this.errors.push(error.response.data.error);
+        }
+      });
     },
     theMovieDbRequest: function theMovieDbRequest(imdbId) {
       var _this2 = this;
@@ -1992,8 +1998,12 @@ __webpack_require__.r(__webpack_exports__);
       axios.get(window.location.origin + "/themoviedbapi?imdb_id=" + imdbId).then(function (resp) {
         _this2.translatedTitle = resp.data.title;
         _this2.overview = resp.data.overview;
-      })["catch"](function (err) {
-        console.log("err");
+      })["catch"](function (error) {
+        var errorMessage = error.response.data.error;
+
+        if (errorMessage && !_this2.errors.includes(errorMessage)) {
+          _this2.errors.push(error.response.data.error);
+        }
       });
     },
     imdbFocus: function imdbFocus() {
