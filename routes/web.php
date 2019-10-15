@@ -17,11 +17,16 @@ Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/approval', 'HomeController@approval')->name('approval');
-    Route::middleware(['approved'])->group(function (){
+    Route::middleware(['approved'])->group(function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/omdbapi', 'FilmAPIController@omdbAPIRequest')->name('omdbapi');
         Route::get('/themoviedbapi', 'FilmAPIController@theMovieDbAPIRequest')->name('themoviedbapi');
         Route::post('/film-orders','FilmOrderController@store')->name("film-orders.store");
         Route::get('/orders','OrderController@index')->name("orders.index");
     });
+});
+
+Route::middleware(['admin'])->group(function () {
+    Route::get('admin/approval', 'Admin\ApprovalController@index')->name('admin.approval.index');
+    Route::put('admin/approval/{id}', 'Admin\ApprovalController@update')->name('admin.approval.update');
 });
