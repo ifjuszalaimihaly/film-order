@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Notifications\UserApprovedNotification;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class ApprovalController extends Controller
         $user->approved_at = Carbon::now();
         $user->save();
         $message = $user->email." approved";
+        $user->notify(new UserApprovedNotification());
         return back()->with("message",$message);
     }
 

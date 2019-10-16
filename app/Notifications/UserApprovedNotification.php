@@ -2,27 +2,23 @@
 
 namespace App\Notifications;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class NewUser extends Notification
+class UserApprovedNotification extends Notification
 {
     use Queueable;
-
-    private $new_user;
-
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct(User $new_user)
+    public function __construct()
     {
-        $this->new_user = $new_user;
+        //
     }
 
     /**
@@ -45,8 +41,9 @@ class NewUser extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line('New user '. $this->new_user->name .' has registered with email ' . $this->new_user->email)
-            ->action('Approve user', route('admin.approval.index'));
+            ->line('Dear '.$notifiable->name.'!')
+            ->line('Your registration is accepted by the admin');
+
     }
 
     /**
