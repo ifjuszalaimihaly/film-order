@@ -6,3 +6,9 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.pagination {
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+}

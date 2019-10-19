@@ -29,4 +29,7 @@ Route::middleware(['auth'])->group(function () {
 Route::group(['middleware'=>['admin'],'prefix'=>'admin'], function () {
     Route::get('/approval', 'Admin\ApprovalController@index')->name('admin.approval.index');
     Route::put('/approval/{id}', 'Admin\ApprovalController@update')->name('admin.approval.update');
+
+    Route::get('/order-status', 'Admin\OrderStatusController@index')->name('admin.order-status.index');
+    Route::put('/order-status/{id}', 'Admin\OrderStatusController@update')->name('admin.order-status.update');
 });

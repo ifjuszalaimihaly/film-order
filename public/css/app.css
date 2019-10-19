@@ -10644,3 +10644,11 @@ a.text-dark:focus {
   }
 }
 
+.pagination {
+  margin-left: auto;
+  margin-right: auto;
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
