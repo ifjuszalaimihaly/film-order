@@ -33,3 +33,6 @@ Route::group(['middleware'=>['admin'],'prefix'=>'admin'], function () {
     Route::get('/order-status', 'Admin\OrderStatusController@index')->name('admin.order-status.index');
     Route::put('/order-status/{id}', 'Admin\OrderStatusController@update')->name('admin.order-status.update');
 });
+
+Route::get('/auth/redirect/{provider}', 'SocialController@redirect');
+Route::get('/callback/{provider}', 'SocialController@callback');
