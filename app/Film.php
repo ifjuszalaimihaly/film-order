@@ -15,4 +15,9 @@ class Film extends Model
     {
         return $this->belongsTo(Status::class)->withDefault();
     }
+
+    public function torrent()
+    {
+        return $this->hasOne(Torrent::class);
+    }
 }

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row justify-content-center">
             <div class="col-md-12">
                 @if(session("message"))
@@ -25,7 +25,7 @@
                         <th scope="col">Rating</th>
                         <th scope="col">User name</th>
                         <th scope="col">Status</th>
-
+                        <th scope="col">Download</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -53,6 +53,16 @@
                                         </select>
                                         <input type="submit" class="btn btn-success" value="Change">
                                     </form>
+                            </td>
+                            <td>
+                                <form class="form-inline"
+                                      action="{{route('admin.torrent.download',$order->film->id)}}"
+                                      enctype="multipart/form-data"
+                                      method="post">
+                                    {{csrf_field()}}
+                                    <input type="file" name="torrent_file">
+                                    <input type="submit" class="btn btn-success" value="Download">
+                                </form>
                             </td>
                         </tr>
                     @endforeach
