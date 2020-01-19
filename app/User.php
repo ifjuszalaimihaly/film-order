@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'approved_at'
     ];
 
     /**
@@ -34,6 +34,33 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'approved_at' => 'datetime',
     ];
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    public function films()
+    {
+        return $this->hasManyThrough(
+            Film::class,
+            Order::class,
+            "user_id",
+            "id",
+            "id",
+            "film_id"
+        );
+    }
+
+    public function ownedFilms()
+    {
+        return $this->films()->where("owner","=",1);
+    }
+
+    public function followedFilms()
+    {
+        return $this->films()->where("owner","=",0);
+    }
 }
