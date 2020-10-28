@@ -32,4 +32,7 @@ Route::group(['middleware'=>['admin'],'prefix'=>'admin'], function () {
 
     Route::get('/order-status', 'Admin\OrderStatusController@index')->name('admin.order-status.index');
     Route::put('/order-status/{id}', 'Admin\OrderStatusController@update')->name('admin.order-status.update');
+
+    Route::get('/torrent-file-upload', 'Admin\TorrentFileUploadController@index')->name('admin.torrentfileupload.index');
+    Route::post('/torrent-file-upload/{id}', 'Admin\TorrentFileUploadController@upload')->name('admin.torrentfileupload.upload');
 });
