@@ -12,3 +12,4 @@ npm-debug.log
 yarn-error.log
 .idea
 /app/Console/Commands/torrent-status.txt
+/app/Console/Commands/torrent-status-new-torrent.txt

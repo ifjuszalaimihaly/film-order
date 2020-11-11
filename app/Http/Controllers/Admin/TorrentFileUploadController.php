@@ -24,10 +24,11 @@ class TorrentFileUploadController extends Controller
     public function upload($id, Request $request)
     {
         $film = Film::find($id);
+        $torrent_file = $request->torrentfile->getClientOriginalName();
+        $request->torrentfile->storeAs('torrentfiles', $torrent_file);
+        $film->torrent_file = $torrent_file;
         $film->save();
-        $request->torrentfile->storeAs('torrentfiles', $request->torrentfile->getClientOriginalName());
         $message = "The torrentfile of the film (".$film->original_title.", ".$film->translated_tile.") is added";
         return back()->with("message",$message);
     }
-
 }

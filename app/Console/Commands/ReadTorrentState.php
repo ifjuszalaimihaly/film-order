@@ -40,6 +40,7 @@ class ReadTorrentState extends Command
      */
     public function handle()
     {
+        exec("transmission-remote -n 'transmission:transmission' -l | tr -s '[:blank:]' ',' > ".__DIR__."/torrent-status.txt");
         sleep(5);
         $file = new SplFileObject(__DIR__."/torrent-status.txt");
 
